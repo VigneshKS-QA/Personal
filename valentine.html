@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Valentine 💖</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+    margin: 0;
+    height: 100vh;
+    background: radial-gradient(circle at top, #fbd3e9, #bb377d);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    overflow: hidden;
+}
+
+/* Glass card with scroll */
+.card {
+    background: rgba(255, 255, 255, 0.18);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: 24px;
+    padding: 28px 24px;
+    width: 90%;
+    max-width: 420px;
+    max-height: 85vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 45px rgba(0,0,0,0.2);
+    color: #ffffff;
+    text-align: center;
+    animation: fadeIn 1.3s ease;
+}
+
+/* hide scrollbar */
+.card::-webkit-scrollbar {
+    width: 0px;
+}
+
+/* headings */
+h1 {
+    font-size: 1.9em;
+    margin-bottom: 20px;
+}
+
+/* main text */
+p {
+    font-size: 1.05em;
+    line-height: 1.9;
+    color: #fff6ea;
+}
+
+/* buttons */
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 25px;
+}
+
+button {
+    border: none;
+    border-radius: 30px;
+    padding: 14px 32px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+#yesBtn {
+    background: linear-gradient(135deg, #ff4d6d, #ff758f);
+    color: white;
+    box-shadow: 0 8px 20px rgba(255,77,109,0.5);
+}
+
+#noBtn {
+    background: rgba(255,255,255,0.9);
+    color: #ff4d6d;
+}
+
+/* floating particles */
+.particle {
+    position: absolute;
+    bottom: -20px;
+    width: 16px;
+    height: 16px;
+    background: rgba(255,255,255,0.35);
+    border-radius: 50%;
+    filter: blur(2.5px);
+    animation: floatUp linear infinite;
+}
+
+@keyframes floatUp {
+    from {
+        transform: translateY(0);
+        opacity: 0.6;
+    }
+    to {
+        transform: translateY(-120vh);
+        opacity: 0.8;
+    }
+}
+
+.hidden {
+    display: none;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.96); }
+    to { opacity: 1; transform: scale(1); }
+}
+</style>
+</head>
+
+<body>
+
+<!-- 🎵 BACKGROUND MUSIC -->
+<audio id="bgMusic" loop>
+    <source src="blue.mp3" type="audio/mpeg">
+</audio>
+
+<!-- QUESTION SCREEN -->
+<div class="card" id="questionCard">
+    <h1>You Should Be My Valentine 😤</h1>
+
+    <div class="buttons">
+        <button id="yesBtn">Yes 😋</button>
+        <button id="noBtn">No 😒</button>
+    </div>
+</div>
+
+<!-- FINAL SCREEN -->
+<div class="card hidden" id="finalCard">
+    <h1>Happy Valentine’s Day to maaa cuuute baabyy galll Pisey💚</h1>
+
+    <p>
+        This is our first Valentine’s Day, and it hurts that I’m not there…<br>
+        I’m not there to hug<br>
+        I’m not there to kiss your forehead<br>
+        I’m not there to eat yummy-yummy strawberries and potatoes 😋<br>
+        I’m not there to give you a sunflower 🌻<br>
+        I’m not there to propose to my maa cuuuuteee baaabyyy 😖<br><br>
+
+        I’m sooooo sorry, my dear love…<br>
+        This is our first Valentine and I couldn’t come there.<br><br>
+
+        And honestly, Valentine’s Day is just one day…<br>
+        For me, every day, every minute, every second is Valentine’s Day<br>
+        because I loooovve you always maa cuuute baaby world😘<br><br>
+
+        I love you soooo soooo soooo much,<br>
+        my maa cuuuuteee baaabyyy wife 😘😋💚
+    </p>
+</div>
+
+<script>
+const yesBtn = document.getElementById("yesBtn");
+const noBtn = document.getElementById("noBtn");
+const questionCard = document.getElementById("questionCard");
+const finalCard = document.getElementById("finalCard");
+const bgMusic = document.getElementById("bgMusic"); // ✅ FIXED
+
+let scale = 1;
+
+/* MOVE NO BUTTON */
+function moveNoButton() {
+    const x = Math.random() * 140 - 70;
+    const y = Math.random() * 80 - 40;
+
+    noBtn.style.transform = `translate(${x}px, ${y}px)`;
+
+    scale += 0.12;
+    yesBtn.style.transform = `scale(${scale})`;
+
+    setTimeout(() => {
+        noBtn.style.transform = "translate(0,0)";
+    }, 600);
+}
+
+noBtn.addEventListener("mouseover", moveNoButton);
+noBtn.addEventListener("touchstart", moveNoButton);
+
+/* YES click → MUSIC + ANIMATION */
+yesBtn.addEventListener("click", () => {
+    questionCard.classList.add("hidden");
+    finalCard.classList.remove("hidden");
+
+    bgMusic.volume = 0.5; // 🔊 volume control (0.1–1)
+    bgMusic.play();      // 🎵 START MUSIC
+
+    startParticles();
+});
+
+/* smooth particles */
+function startParticles() {
+    setInterval(() => {
+        const p = document.createElement("div");
+        p.className = "particle";
+        p.style.left = Math.random() * 100 + "vw";
+        p.style.animationDuration = (10 + Math.random() * 8) + "s";
+        document.body.appendChild(p);
+        setTimeout(() => p.remove(), 18000);
+    }, 500);
+}
+</script>
+
+</body>
+</html>
